@@ -1,0 +1,19 @@
+---
+import {client} from '../lib/tursoDb.js'
+import Layout from "../layouts/Layout.astro"
+import Results from '../components/Results';
+
+const allFlights = await client.execute("SELECT * FROM flightInformation")
+
+---
+
+
+<Layout title='Students flights'>
+
+   
+
+<div class="mt-16 grid justify-items-center relative overflow-x-auto">
+   <Results allFlights={allFlights} client:visible/>
+</div>
+
+</Layout>

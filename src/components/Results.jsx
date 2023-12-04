@@ -1,0 +1,184 @@
+import { useState } from "preact/hooks";
+import { sortByTime } from "../lib/sortByTime";
+function Results({ allFlights }) {
+  const [filtredFlights, setFiltredFlights] = useState(allFlights);
+
+  const handleChangeSerchByName = (e) => {
+    const value = e.target.value;
+    const filtred = allFlights.rows.filter((flight) =>
+      flight.first_name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFiltredFlights({ rows: filtred });
+  };
+
+  const handleClickNeedsTransportation = (e) => {
+    const value = e.target.checked;
+    const filtred = allFlights.rows.filter((flight) => {
+      if (value) {
+        return flight.needTransportation === "on";
+      } else {
+        return flight;
+      }
+    });
+    setFiltredFlights({ rows: filtred });
+  };
+
+  const handleChangeFilterByLeaving = (e) => {
+    const value = e.target.value;
+    const sortedByDeparture = sortByTime(
+      filtredFlights.rows,
+      "departure",
+      value
+    );
+    setFiltredFlights({ rows: sortedByDeparture });
+  };
+  const handleChangeFilterByReturn = (e) => {
+    const value = e.target.value;
+    const sortedByReturning = sortByTime(filtredFlights.rows, "Return", value);
+    setFiltredFlights({ rows: sortedByReturning });
+  };
+
+  console.log(filtredFlights.rows);
+  return (
+    <>
+      <div class="pb-4 bg-white dark:bg-gray-900">
+        <label for="table-search" class="sr-only">
+          Search
+        </label>
+        <div class="relative mt-1">
+          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            onChange={handleChangeSerchByName}
+            id="table-search"
+            class="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search by student name"
+          />
+        </div>
+      </div>
+      <ul class="grid max-w-3xl mb-6 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+          <div class="flex items-center ps-3">
+            <input
+              id="vue-checkbox-list"
+              type="checkbox"
+              onClick={handleClickNeedsTransportation}
+              value=""
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            />
+            <label
+              for="vue-checkbox-list"
+              class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Needs Transportation
+            </label>
+          </div>
+        </li>
+        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+          <div class="flex items-center ps-3">
+            <select
+              id="leaving"
+              onChange={handleChangeFilterByLeaving}
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected>Filter by leaving</option>
+              <option value="leatest">Leaving leatest</option>
+              <option value="earliest">Leaving earliest</option>
+            </select>
+          </div>
+        </li>
+        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+          <div class="flex items-center ps-3">
+            <select
+              id="returning"
+              onChange={handleChangeFilterByReturn}
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected>Filter by return</option>
+              <option value="leatest">Returning latter</option>
+              <option value="earliest">Returning sooner</option>
+            </select>
+          </div>
+        </li>
+      </ul>
+      <table class=" mx-4 md:mx-12 w-full max-w-7xl text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Student name
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Needs Transportation
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Time leaving
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Time comming back
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Flight Number
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Student email
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Student phone
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtredFlights.rows.length !== 0 ? (
+            filtredFlights.rows.map((flight) => (
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {flight.first_name} {flight.last_name}
+                </th>
+                <th class="px-6 py-4">
+                  {flight.needTransportation === "undefined" ? "No" : "Yes"}
+                </th>
+                <td class="px-6 py-4 w-fit">
+                  {flight.dayLeaving} {flight.hourLeaving}:
+                  {flight.minuteLeaving}
+                </td>
+                <td class="px-6 py-4 w-fit">
+                  {flight.dayCommingBack} {flight.hourCommingBack}:
+                  {flight.minuteCommingBack}
+                </td>
+                <td class="px-6 py-4">#{flight.flightNumber}</td>
+                <td class="px-6 py-4">{flight.email}</td>
+
+                <td class="px-6 py-4">{flight.phone}</td>
+              </tr>
+            ))
+          ) : (
+            <p className="text-gray-400 text-center w-full mt-6">
+              No results for that serch!
+            </p>
+          )}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+export default Results;
