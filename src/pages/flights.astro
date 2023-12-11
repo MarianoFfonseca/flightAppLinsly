@@ -3,7 +3,98 @@ import {client} from '../lib/tursoDb.js'
 import Layout from "../layouts/Layout.astro"
 import Results from '../components/Results';
 
-const allFlights = await client.execute("SELECT * FROM flightInformation")
+   // const allFlights = await client.execute("SELECT * FROM flightInformation")
+   // console.log(allFlights)
+   const exampleAllFlights = {
+  columns: [
+    'id',
+    'email',
+    'first_name',
+    'last_name',
+    'phone',
+    'needTransportation',
+    'dayLeaving',
+    'hourLeaving',
+    'minuteLeaving',
+    'dayCommingBack',
+    'hourCommingBack',
+    'minuteCommingBack',
+    'flightNumber'
+  ],
+  columnTypes: [
+    'INTEGER', 'TEXT',
+    'TEXT',    'TEXT',
+    'TEXT',    'TEXT',
+    'TEXT',    'TEXT',
+    'TEXT',    'TEXT',
+    'TEXT',    'TEXT',
+    'TEXT'
+  ],
+  rows: [
+    {
+      id: 10,
+      email: 'marian.fonseca2084@gmail.com',
+      first_name: 'Mariano',
+      last_name: 'Fonseca',
+      phone: '304-830-7099',
+      needTransportation: 'on',
+      dayLeaving: '12/20/2023',
+      hourLeaving: '7',
+      minuteLeaving: '44',
+      dayCommingBack: '01/16/2024',
+      hourCommingBack: '9',
+      minuteCommingBack: '44',
+      flightNumber: 'Nk333'
+    },
+    {
+      id: 12,
+      email: 'example@gmail.com',
+      first_name: 'Fran',
+      last_name: 'Poi',
+      phone: '304-830-7099',
+      needTransportation: 'on',
+      dayLeaving: '12/25/2023',
+      hourLeaving: '10',
+      minuteLeaving: '23',
+      dayCommingBack: '01/05/2024',
+      hourCommingBack: '23',
+      minuteCommingBack: '3',
+      flightNumber: '222222'
+    },
+    {
+      id: 15,
+      email: 'marian.fonseca2084@gmail.com',
+      first_name: 'Mariano',
+      last_name: 'Fonseca',
+      phone: '3048307099',
+      needTransportation: 'undefined',
+      dayLeaving: '',
+      hourLeaving: '',
+      minuteLeaving: '',
+      dayCommingBack: '',
+      hourCommingBack: '',
+      minuteCommingBack: '',
+      flightNumber: ''
+    },
+    {
+      id: 16,
+      email: 'marian.fonseca2084@gmail.com',
+      first_name: 'Mariano',
+      last_name: 'Fonseca',
+      phone: '3048307099',
+      needTransportation: 'undefined',
+      dayLeaving: '',
+      hourLeaving: '',
+      minuteLeaving: '',
+      dayCommingBack: '',
+      hourCommingBack: '',
+      minuteCommingBack: '',
+      flightNumber: ''
+    }
+  ],
+  rowsAffected: 0,
+  lastInsertRowid: undefined
+}
 
 ---
 
@@ -13,7 +104,7 @@ const allFlights = await client.execute("SELECT * FROM flightInformation")
    
 
 <div class="mt-8 grid justify-items-center relative overflow-x-auto">
-   <Results allFlights={allFlights} client:visible/>
+   <Results allFlights={exampleAllFlights} client:visible/>
 </div>
 
 </Layout>

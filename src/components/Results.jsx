@@ -53,8 +53,12 @@ function Results({ allFlights }) {
   }
 
   return (
-    <>
-      <div class="pb-4 ">
+    <div
+      class={
+        "grid justify-items-start md:justify-items-center relative ml-4 md:ml-0 mb-10"
+      }
+    >
+      <div class="pb-4">
         <label for="table-search" class="sr-only">
           Search
         </label>
@@ -130,7 +134,7 @@ function Results({ allFlights }) {
           </div>
         </li>
       </ul>
-      <table class=" mx-4 md:mx-12 w-full max-w-7xl text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table class="md:mx-12 w-full max-w-7xl text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="px-6 py-3">
@@ -200,7 +204,7 @@ function Results({ allFlights }) {
           )}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
 
