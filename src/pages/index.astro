@@ -101,7 +101,7 @@ import Layout from '../layouts/Layout.astro';
 		  </div>
 			
 		  <hr class="mt-6 mb-4 border-slate-600">
-		<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+		<button type="submit" id="submitButton" class="text-white disabled:opacity-25 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
 		
 	</form>
 	  
@@ -110,31 +110,18 @@ import Layout from '../layouts/Layout.astro';
 <script>	
 import {client} from '../lib/tursoDb'	
 const transportationCheck = document.getElementById('transportationCheck');
+const submitButton = document.getElementById('submitButton');
 const needTransportationElement = document.getElementById('needTransportation');
 transportationCheck.addEventListener('click', () => {
-	console.log(transportationCheck)
 	needTransportationElement.style.display = transportationCheck.checked ? 'grid' : 'none';
 });
-const trableForm = document.getElementById('trableForm');
-
+const trableForm = document.getElementById('trableForm') as HTMLFormElement;
 trableForm.addEventListener('submit', async (e) => {
 	e.preventDefault();
+	// disable the submit button
+	submitButton.setAttribute('disabled', '');
 	const formData = new FormData(trableForm);
 	const data = Object.fromEntries(formData.entries());
-	const Objectdata = {
-		first_name: data.first_name,
-		last_name: data.last_name,
-		email: data.email,
-		phone: data.phone,
-		needTransportation: data.needTransportation,
-		dayLeaving: data.dayLeaving,
-		hourLeaving: data.hourLeaving,
-		minuteLeaving: data.minuteLeaving,
-		dayCommingBack: data.dayCommingBack,
-		hourCommingBack: data.hourCommingBack,
-		minuteCommingBack: data.minuteCommingBack,
-		flightNumber: data.flightNumber,
-	}
 	try {
 
 		await client.execute(`
@@ -183,6 +170,7 @@ await client.execute({
 
 } catch (err) {
 	alert(err.message)
+	submitButton.removeAttribute('disabled');
 }
 }
 );

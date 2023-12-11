@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { sortByTime } from "../lib/sortByTime";
 import { client } from "../lib/tursoDb";
+import ButtonRemoveData from "./ButtonRemoveData";
 function Results({ allFlights }) {
   const [filtredFlights, setFiltredFlights] = useState(allFlights);
   const [sureToDelete, setSureToDelete] = useState(false);
@@ -183,12 +184,13 @@ function Results({ allFlights }) {
                 <td class="px-6 py-4">{flight.email}</td>
 
                 <td class="px-6 py-4">{flight.phone}</td>
-                <td
+                <ButtonRemoveData id={flight.id} />
+                {/* <td
                   onClick={() => deleteStudentPlans(flight.id)}
                   class="px-6 py-4 text-red-800 underline cursor-pointer"
                 >
                   {sureToDelete ? "Sure?" : "Delete"}
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (
