@@ -12,7 +12,7 @@ const allFlights = await client.execute("SELECT * FROM flightInformation")
 
    
 
-<div class="mt-16 grid justify-items-center relative overflow-x-auto">
+<div class="mt-8 grid justify-items-center relative overflow-x-auto">
    <Results allFlights={allFlights} client:visible/>
 </div>
 

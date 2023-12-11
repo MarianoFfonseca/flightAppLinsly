@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Fligth form information">
 
 
-	<form id="trableForm" class="max-w-md mx-2 md:mx-auto mt-12 place-items-center border-2 rounded-lg border-gray-600 shadow-lg shadow-gray-700 p-8">
+	<form id="trableForm" class="max-w-md mx-2 mb-4 bg-slate-50 md:mx-auto mt-8 place-items-center border-2 rounded-lg border-gray-600 shadow-lg shadow-gray-700 p-8">
 		<div class="grid md:grid-cols-2 md:gap-6">
 			<div class="relative z-0 w-full mb-5 group">
 				<input type="text" name="first_name" id="first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -177,7 +177,7 @@ await client.execute({
     flightNumber: String(data.flightNumber),
   },
 });
-		alert('Your information has been saved')
+		
 		window.location.href = '/success'
 
 
